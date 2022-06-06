@@ -20,7 +20,7 @@ int main(){
 				scanf("%d", &choice1);
 			}while(choice1 != 1 && choice1 != 2);
 			
-			if (choice2==1){
+			if (choice1==1){
 				int res=0;
 				res=searchbook();
 				checkbook(res);
