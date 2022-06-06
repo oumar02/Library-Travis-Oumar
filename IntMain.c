@@ -1,6 +1,4 @@
-#include"Login.h"
-#include"BookManagement.h"
-#include"NewAccount.h"
+
 #include"AllAction.h"
 
 int main(){
@@ -14,7 +12,7 @@ int main(){
 		scanf("%d", &choice1);
 	}while(choice1 != 1 && choice1 != 2 && choice1 != 3);
 	if(choice1==1){
-		if(action1(FILE * account)==1){
+		if(action1(account)==1){
 			printf("Bienvenue dans l'application !");
 			do{
 				printf("--------------------------------------\n--------------------------------------\n");
@@ -37,7 +35,7 @@ int main(){
 		}
 	}
 	if(choice1==2){
-		if(action2(FILE * account)==1){
+		if(action2(account)==1){
 			printf("Relancez l'application pour vous connecter !\n");
 			fclose(account);
 		return 0;

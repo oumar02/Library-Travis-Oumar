@@ -1,6 +1,5 @@
 all: library
 
-
 AllAction.o: AllAction.c AllAction.h 
 	gcc -c AllAction.c -o AllAction.o 
 

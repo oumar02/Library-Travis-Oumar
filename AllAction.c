@@ -1,14 +1,15 @@
 #include"AllAction.h"
 
-int checking_login(FILE* account, char user[11], int *pointerofaccount){			//Une fonction pour vérifier si le nom d'utilisateur et correct.
+int checking_login(char user[11], int *pointerofaccount){				//A function to check if the username is correct.
 	
 	char check[11], line[11];
 	char next;
 	int i, numberofaccount=0, j=0, meter=0, k=0;
-
+	FILE* account = NULL;
+	account = fopen("Account.txt","r");
 	rewind(account);
 	
-	do{										//On compte le nombre de comptes éxistants.
+	do{										//The number of existing accounts is counted.
 		k = fgetc(account);
 		if(k == '\n') numberofaccount++;
 		}
@@ -18,12 +19,12 @@ int checking_login(FILE* account, char user[11], int *pointerofaccount){			//Une
 	
 	rewind(account);
 	
-	for(i=0; i<=numberofaccount-1; i++){						//Une boucle pour vérifier un par un les nom d'utilisateur déjà utilisés.
+	for(i=0; i<=numberofaccount-1; i++){						//A loop "to" check one by one the usernames already used.
 		fgets(line, 10, account);
 
 		
 		
-		while(meter<2){							//Un while pour prendre en compte que les nom d'utilisateur et pas les mots de passe.
+		while(meter<2){							//A "while" to take into account only usernames and not passwords.
 			next=fgetc(account);
 			if(next=='\n'){
 				meter++;
@@ -35,14 +36,15 @@ int checking_login(FILE* account, char user[11], int *pointerofaccount){			//Une
 		char *supr_return;
 		supr_return = strpbrk(line, "\n");
 		
-		if(supr_return != NULL){						//On supprime les retour à la ligne inutiles.
+		if(supr_return != NULL){						//Unnecessary line breaks are removed.
 			*supr_return = 0;
 		}
 		
 		*pointerofaccount +=2;
 		
-		if (strcmp(user, line)==0){						//On compare si le nom d'utilisateur donné est identique à celui d'une personne déjà inscrite pour le refusé.
+		if (strcmp(user, line)==0){					//A comparison is made if the given username is the same as the username of a person already registered to refuse it.
 			printf("Nom d'utilisateur correct !\n");
+			fclose(account);
 
 			return 0;
 		}
@@ -53,28 +55,30 @@ int checking_login(FILE* account, char user[11], int *pointerofaccount){			//Une
 	
 	printf("Nom d'utilisateur incorrecte !!!\n");
 	printf("L'application a fermé !\nReconnectez-vous plus tard !\n");
-
+	fclose(account);
 	return 1;
 }
 
-int checking_password ( FILE * account, char password[11], int *pointerofaccount){			//Une fonction pour savoir si le mot de passe correspond au nom d'utilisateur.
+int checking_password(char password[11], int *pointerofaccount){			//A function to find out if the password matches the username.
 	
 	char line[11];
 	char next;
 	int i, j, meter=0;
 
 
-	fgets(line, 10, account);
+	FILE* account = NULL;
+	account = fopen("Account.txt","r");
+	rewind(account);
+	printf("%d\n", (*pointerofaccount));
 	
-	
-	/*for(i=0; i<*pointerofaccount; i++){					//Une boucle pour vérifier le mot de passe valide.
+	for(i=0; i<=(*pointerofaccount)-1; i++){					//A "for" loop to check the valid password.
 		fgets(line, 10, account);
-		line[strlen(line)-1]=' ';
+		line[strlen(line)-1]=' ';;
 		printf("%s\n", line);
 		
-	}*/
+	}
 		
-	if (strcmp(password, line)==0){						//On compare si le mot de passe donné est identique à celui de la personne déjà inscrite pour le refusé ou pas.
+	if (strcmp(password, line)==0){			//A comparison is made to see if the password given is the same as the password of the person already registered to refuse it or not.
 			printf("Mot de passe correcte !\n");
 			fclose(account);
 			return 0;
@@ -82,20 +86,21 @@ int checking_password ( FILE * account, char password[11], int *pointerofaccount
 
 	printf("Mot de passe incorrecte !!!\n");
 	printf("L'application a fermé !\nReconnectez-vous plus tard !\n");
-	
+	fclose(account);
 	return 1;
 
 }
 
 
-int checking(FILE * account, char user[11]){
+int checking(char user[11]){
 
-	char check[11], line[11];							//Une fonction qui vérifie si le nom d'utilisateur est disponible.
+	char check[11], line[11];							//A function that checks if the username is available.
 	char next;
 	int i, numberofaccount=0, j, meter=0;
-	rewind(account);
+	FILE* account = NULL;
+	account = fopen("Account.txt","r");
 	
-	do{										//On compte le nombre de comptes éxistants.
+	do{										//The number of existing accounts is counted.
 		i = fgetc(account);
 		
 		if(i == '\n') numberofaccount++;
@@ -120,31 +125,32 @@ int checking(FILE * account, char user[11]){
 		char *supr_return;							
 		supr_return = strpbrk(line, "\n");
 		
-		if(supr_return != NULL){						//On supprime les retour à la ligne inutiles.
+		if(supr_return != NULL){						//Unnecessary line breaks are removed.
 		*supr_return = 0;
 		}
 		
-	if (strcmp(user, line)==0){							//On compare si le nom d'utilisateur donné est identique à celui d'une personne déjà inscrite pour le refusé.
+	if (strcmp(user, line)==0){						//A comparison is made if the given username is the same as the username of a person already registered to refuse it.
 			printf("Un autre utilisateur possède déjà ce nom !!!\n");
-			
+			fclose(account);
 			return 1;
 			}
 			
 	}
 	
 	printf("Login disponible !\n");
-	
+	fclose(account);
 	return 0;
 }
 
 
-void newlogin(FILE * account){
+void newlogin(){
 
-	char newlogin[11];								//Une fonction pour créer un nouveau nom d'utilisateur et l'inscrire dans la liste des comptes.
+	char newlogin[11];								//A function to create a new user name and enter it in the list of accounts.
 	char next[]="\n";
 	int identity;
-	rewind(account);
-											//On demande un nom avec plus de 0 caractère et moins de 10 caractères sinon on redemande.
+	FILE* account=NULL;
+	account = fopen("Account.txt","a");
+											//A name with more than 0 characters and less than 10 characters is requested, otherwise it is requested again.
 	printf("Nom d'utilisateur: (10 charactères autorisés)\n!!!! Les autres caractères ne seront pas pris en compte !!!!\n");
 	scanf("%10s", newlogin);
 
@@ -160,14 +166,16 @@ void newlogin(FILE * account){
 	
 	fputs(newlogin, account);
 	fputs(next, account);
+	fclose(account);
 }
 
 
-void newpassword(FILE * account){								//On fais une même fonction mais pour le mot de passe et pas besoin de vérifier s'il est déjà utilisé.
+void newpassword(){									//We do the same function but for the password and no need to check if it is already used.
 
 	char newpassword[11];
 	char next[]="\n";
-	rewind(account);
+	FILE* account=NULL;
+	account = fopen("Account.txt", "a");
 	printf("Mot de passe: (10 charactères autorisés)\n!!!! Les autres caractères ne seront pas pris en compte !!!!\n");
 	scanf("%s", newpassword);
 	fputs(newpassword, account);
@@ -189,7 +197,7 @@ void nextline(FILE * booklist, int nbline){
 }
 
 
-int searchbook(){
+int searchbook(){									//A search function for the requested book.
 	int numberofbook=0, j, i;
 	char searchbook[999];
 	char findbook[999];
@@ -246,7 +254,7 @@ int searchbook(){
 	return 0;
 }
 
-int checkbook(int nbline){
+int checkbook(int nbline){								//A function to borrow a book.
 	int i, j, numberofbook=0;
 	char next;
 	char letter;
@@ -278,39 +286,36 @@ int checkbook(int nbline){
 
 
 
-int action1(FILE * account){										//Permet le lancement du système de connexion.
+int action1(){										//Allows the connection system to be launched.
 	int numberofaccount=0;
 	int *pointerofaccount=&numberofaccount;
 	char user[11], password[11];
-	rewind(account);
 
 	do {
 	 	printf("Nom d'utilisateur:\n");
 		scanf("%s", user);
-	 }while(checking_login(account, user, pointerofaccount)==1);
+	 }while(checking_login(user, pointerofaccount)==1);
 	
 	do {
 		printf("Mot de passe:\n");
 		scanf("%s", password);
-	}while(checking_password(account, password, pointerofaccount)==1);
+	}while(checking_password(password, pointerofaccount)==1);
 	
 	printf("Bienvenue dans l'application!\n");
 	return 1;
 	
 }
 
-int action2(FILE * account){										//Permet de faire la création d'un compte.
+int action2(){										//Allows you to create an account.
 	int numberofaccount=0;
 	int *pointerofaccount=&numberofaccount;
 	char user[11], password[11];
-
 	
 	newlogin();
 	
 	newpassword();
 		
 	printf("Compte créé!!!\n");
-
 	return 1;
 }
 
