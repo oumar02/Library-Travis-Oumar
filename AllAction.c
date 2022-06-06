@@ -222,7 +222,10 @@ int searchbook(){									//A search function for the requested book.
 	}
 	
 	printf("Quel livre voulez-vous emprunter ?		(Vous devez l'écrire correctement dans son ensemble avec le(s) auteur(s) !\n");
-	gets(searchbook);
+	//gets(searchbook); //Cette fonction n'existe plus dans stdio.h
+	do{
+		fgets(searchbook,999,stdin);
+	}while(strlen(searchbook)==1);
 	rewind(booklist);
 	
 	for(i=0; i<=(numberofbook*2)-2; i++){
@@ -235,11 +238,11 @@ int searchbook(){									//A search function for the requested book.
 		
 		fseek(booklist, 0, SEEK_CUR);
 		char *supr_return;
-		supr_return = strpbrk(findbook, "\n");
+		/*supr_return = strpbrk(findbook, "\n");
 		
 		if(supr_return != NULL){
 		*supr_return = 0;
-		}
+		}*/ //Plus besoin de ça en utilisant fgets pour récupérer searchbook
 		
 		if (strcmp(searchbook, findbook)==0){
 			printf("Livre trouvé !!!\n");
