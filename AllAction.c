@@ -40,7 +40,7 @@ int checking_login(char user[11], int *pointerofaccount){				//A function to che
 			*supr_return = 0;
 		}
 		
-		*pointerofaccount +=2;
+		//*pointerofaccount +=2;
 		
 		if (strcmp(user, line)==0){					//A comparison is made if the given username is the same as the username of a person already registered to refuse it.
 			printf("Nom d'utilisateur correct !\n");
@@ -62,6 +62,7 @@ int checking_login(char user[11], int *pointerofaccount){				//A function to che
 int checking_password(char password[11], int *pointerofaccount){			//A function to find out if the password matches the username.
 	
 	char line[11];
+	char line_empty[11];
 	char next;
 	int i, j, meter=0;
 
@@ -71,11 +72,16 @@ int checking_password(char password[11], int *pointerofaccount){			//A function 
 	rewind(account);
 	printf("%d\n", (*pointerofaccount));
 	
-	for(i=0; i<=(*pointerofaccount)-1; i++){					//A "for" loop to check the valid password.
+	/*for(i=0; i<=(*pointerofaccount)-1; i++){					//A "for" loop to check the valid password.
 		fgets(line, 10, account);
 		line[strlen(line)-1]='\0';;
 		printf("%s\n", line);
-		
+	}*/
+	for(i=0; i<=(*pointerofaccount); i++){					//A "for" loop to check the valid password.
+		fgets(line, 10, account);
+		fgets(line, 10, account);
+		fgets(line_empty, 10, account);
+		line[strlen(line)-1]='\0';
 	}
 		
 	if (strcmp(password, line)==0){			//A comparison is made to see if the password given is the same as the password of the person already registered to refuse it or not.
