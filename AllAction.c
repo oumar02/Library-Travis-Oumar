@@ -72,7 +72,7 @@ int checking_password(char password[11], int *pointerofaccount){			//A function 
 	rewind(account);
 	printf("%d\n", (*pointerofaccount));
 	
-	for(i=0; i<=(*pointerofaccount); i++){					//A "for" loop to check the valid password.
+	for(i=0; i<=(*pointerofaccount)/3; i++){					//A "for" loop to check the valid password.
 		fgets(line, 10, account);
 		fgets(line, 10, account);
 		fgets(line_empty, 10, account);
