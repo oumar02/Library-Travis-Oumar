@@ -54,7 +54,7 @@ int checking_login(char user[11], int *pointerofaccount){				//A function to che
 	}
 	
 	printf("Nom d'utilisateur incorrecte !!!\n");
-	printf("L'application a fermé !\nReconnectez-vous plus tard !\n");
+	printf("Veuillez fermer l'application !\nRelancez l'application !\n");
 	fclose(account);
 	return 1;
 }
