@@ -49,7 +49,7 @@ int checking_login(char user[11], int *pointerofaccount){				//A function to che
 			return 0;
 		}
 		
-		*pointerofaccount ++;
+		*pointerofaccount +=1;
 		
 	}
 	
