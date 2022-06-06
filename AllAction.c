@@ -276,7 +276,6 @@ int checkbook(int nbline){								//A function to borrow a book.
 	nextline(booklist, nbline);
 	fseek(booklist, -2, SEEK_CUR);
 	available=fgetc(booklist);
-	printf("%c\n%c", available, free);
 	if(available == free){
 		printf("Le livre n'est pas empruté !\nVous avez emprunter le livre !\n");
 			fseek(booklist, -1, SEEK_CUR);
