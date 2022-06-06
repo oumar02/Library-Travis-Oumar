@@ -40,7 +40,7 @@ int checking_login(char user[11], int *pointerofaccount){				//A function to che
 			*supr_return = 0;
 		}
 		
-		//*pointerofaccount +=2;
+		*pointerofaccount +=2;
 		
 		if (strcmp(user, line)==0){					//A comparison is made if the given username is the same as the username of a person already registered to refuse it.
 			printf("Nom d'utilisateur correct !\n");
@@ -72,11 +72,6 @@ int checking_password(char password[11], int *pointerofaccount){			//A function 
 	rewind(account);
 	printf("%d\n", (*pointerofaccount));
 	
-	/*for(i=0; i<=(*pointerofaccount)-1; i++){					//A "for" loop to check the valid password.
-		fgets(line, 10, account);
-		line[strlen(line)-1]='\0';;
-		printf("%s\n", line);
-	}*/
 	for(i=0; i<=(*pointerofaccount); i++){					//A "for" loop to check the valid password.
 		fgets(line, 10, account);
 		fgets(line, 10, account);
@@ -91,7 +86,6 @@ int checking_password(char password[11], int *pointerofaccount){			//A function 
 			}
 
 	printf("Mot de passe incorrecte !!!\n");
-	printf("L'application a fermé !\nReconnectez-vous plus tard !\n");
 	fclose(account);
 	return 1;
 
